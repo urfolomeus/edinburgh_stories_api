@@ -24,7 +24,7 @@ end
 
 get '/assets' do
   content_type :json
-  Asset.all.to_json
+  Asset.by_title.to_json
 end
 
 get '/assets/:id' do
@@ -37,3 +37,4 @@ post '/assets' do
   content_type :json
   Asset.find(asset.id).to_json
 end
+

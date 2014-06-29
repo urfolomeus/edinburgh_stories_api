@@ -1,7 +1,7 @@
 class Asset < CouchRest::Model::Base
   use_database $COUCHDB
 
-  property :name,         String
+  property :title,        String
   property :file_type,    String
   property :url,          String
   property :alt,          String
@@ -16,7 +16,7 @@ class Asset < CouchRest::Model::Base
   timestamps!
 
   design do
-    view :by_name
+    view :by_title
   end
 end
 

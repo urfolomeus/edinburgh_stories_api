@@ -1,12 +1,17 @@
 <form action="/assets" method="POST">
-  <input type="text" name="asset[name]" value="dog" />
-  <input type="text" name="asset[alt]" value="a dog" />
-  <input type="text" name="asset[description]" value="a picture of a dog" />
+  <input type="text" name="asset[url]" value="/images/st_giles.jpg" />
+  <input type="text" name="asset[title]" value="Cathedral" />
+  <input type="text" name="asset[alt]" value="St Giles Cathedral" />
+  <input type="text" name="asset[description]" value="St Gile is Edinburgh's Cathedral. Situated on the Royal Mile it is very much part of the tourist trail." />
   <input type="text" name="asset[file_type]" value="img" />
-  <input type="text" name="asset[width]" value="200" />
-  <input type="text" name="asset[height]" value="200" />
+  <input type="text" name="asset[width]" value="1880" />
+  <input type="text" name="asset[height]" value="1254" />
   <input type="text" name="asset[resolution]" value="72" />
   <input type="text" name="asset[device]" value="iphone" />
   <input type="text" name="asset[is_readable]" value="false" />
   <input type="submit" value="Go" />
+</form>
+
+<form action="/assets/all" method="POST">
+  <input type="submit" value="Add dummy data" />
 </form>
