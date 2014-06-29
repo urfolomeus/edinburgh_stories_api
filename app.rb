@@ -9,10 +9,19 @@ configure do
   $COUCH = CouchRest.new ENV["COUCHDB_URL"]
   $COUCH.default_database = ENV["COUCHDB_DEFAULT_DB"]
   $COUCHDB = $COUCH.default_database
-  CouchRest::Model::Base.configure do |config|
-    config.connection = {
-      :host => ENV["COUCHDB_URL"]
-    }
+  if uri = URI.parse(ENV['COUCHDB_URL'])
+    CouchRest::Model::Base.configure do |config|
+      config.connection = {
+        :protocol => uri.scheme,
+        :host     => uri.host,
+        :port     => uri.port,
+        :prefix   => 'couchrest', # database name or prefix
+        :suffix   => nil,
+        :join     => '_',
+        :username => uri.user,
+        :password => uri.password
+      }
+    end
   end
   p env: ENV
   p couch: $COUCH
