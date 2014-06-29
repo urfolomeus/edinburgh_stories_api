@@ -14,7 +14,6 @@ end
 require File.expand_path('models/asset', File.dirname(__FILE__))
 
 # ROOT
-
 get '/' do
   erb :form
 end
