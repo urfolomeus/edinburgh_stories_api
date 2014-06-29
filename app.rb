@@ -9,6 +9,9 @@ configure do
   $COUCH = CouchRest.new ENV["COUCHDB_URL"]
   $COUCH.default_database = ENV["COUCHDB_DEFAULT_DB"]
   $COUCHDB = $COUCH.default_database
+  p env: ENV
+  p couch: $COUCH
+  p couchdb: $COUCHDB
 end
 
 require File.expand_path('models/asset', File.dirname(__FILE__))
