@@ -9,6 +9,8 @@ configure do
   $COUCH = CouchRest.new ENV["COUCHDB_URL"]
   $COUCH.default_database = ENV["COUCHDB_DEFAULT_DB"]
   $COUCHDB = $COUCH.default_database
+
+  # HACK: https://github.com/couchrest/couchrest_model/issues/105
   if uri = URI.parse(ENV['COUCHDB_URL'])
     CouchRest::Model::Base.configure do |config|
       config.connection = {
@@ -23,9 +25,6 @@ configure do
       }
     end
   end
-  p env: ENV
-  p couch: $COUCH
-  p couchdb: $COUCHDB
 end
 
 require File.expand_path('models/asset', File.dirname(__FILE__))
