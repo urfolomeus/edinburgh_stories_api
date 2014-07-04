@@ -2,7 +2,7 @@ require 'sinatra'
 require 'json'
 require 'couchrest_model'
 
-ENV["COUCHDB_URL"] = "https://armoin.iriscouch.com"
+ENV["COUCHDB_URL"] ||= "http://localhost:5984"
 ENV["COUCHDB_DEFAULT_DB"] = "memphis_spoof_api"
 
 configure do
@@ -53,3 +53,8 @@ post '/assets' do
   Asset.find(asset.id).to_json
 end
 
+put '/assets/:id' do
+  asset = Asset.find(params[:id])
+  asset.update_attributes(url: params[:asset][:url])
+  asset.to_json
+end
