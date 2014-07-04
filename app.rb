@@ -2,8 +2,8 @@ require 'sinatra'
 require 'json'
 require 'couchrest_model'
 
-ENV["COUCHDB_URL"] ||= "http://localhost:5984"
-ENV["COUCHDB_DEFAULT_DB"] = "memphis_spoof_api"
+ENV["COUCHDB_URL"]        ||= "http://localhost:5984"
+ENV["COUCHDB_DEFAULT_DB"] ||= "memphis_spoof_api"
 
 configure do
   $COUCH = CouchRest.new ENV["COUCHDB_URL"]
