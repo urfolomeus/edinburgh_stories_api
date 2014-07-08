@@ -29,6 +29,12 @@ end
 
 require File.expand_path('models/asset', File.dirname(__FILE__))
 
+helpers do
+  def asset
+    @asset ||= Asset.find(params[:id]) || halt(404)
+  end
+end
+
 # ROOT
 get '/' do
   erb :form
@@ -44,7 +50,7 @@ end
 
 get '/assets/:id' do
   content_type :json
-  Asset.find(params[:id]).to_json
+  asset.to_json
 end
 
 post '/assets' do
@@ -54,7 +60,6 @@ post '/assets' do
 end
 
 put '/assets/:id' do
-  asset = Asset.find(params[:id])
   asset.update_attributes(url: params[:asset][:url])
   asset.to_json
 end
