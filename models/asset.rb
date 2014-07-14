@@ -4,7 +4,6 @@ class Asset < CouchRest::Model::Base
   property :title,        String
   property :file_type,    String
   property :url,          String
-  property :alt,          String
   property :description,  String
   property :date,         Date
   property :width,        Integer
