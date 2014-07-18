@@ -64,11 +64,3 @@ put '/assets/:id' do
   asset.to_json
 end
 
-get '/fix_dates' do
-  assets = Asset.by_title
-  assets.each do |asset|
-    asset.fix_dates
-    asset.save!
-  end
-  assets.to_json
-end

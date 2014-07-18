@@ -5,7 +5,6 @@ class Asset < CouchRest::Model::Base
   property :file_type,    String
   property :url,          String
   property :description,  String
-  property :date,         Date
   property :year,         String
   property :month,        String
   property :day,          String
@@ -20,13 +19,6 @@ class Asset < CouchRest::Model::Base
 
   design do
     view :by_title
-  end
-
-  def fix_dates
-    return unless date
-    self.year  = date.year
-    self.month = date.month
-    self.day   = date.day
   end
 end
 
