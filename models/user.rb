@@ -25,6 +25,9 @@ class User < CouchRest::Model::Base
   validates :first_name, :last_name, :email, :encrypted_password, presence: true
   validates :token_set, presence: true, unless: Proc.new {|u| u.auth_token.blank?}
 
+  require 'bcrypt'
+  include BCrypt
+
   def self.authenticate!(username, password)
     user = by_username.key(username).first
     raise InvalidCredentials.new('Invalid username or password') unless user && user.password_matches?(password)
@@ -48,7 +51,7 @@ class User < CouchRest::Model::Base
   end
 
   def password_matches?(password)
-    self.encrypted_password == password
+    Password.new(self.encrypted_password) == password
   end
 
   private
@@ -62,7 +65,7 @@ class User < CouchRest::Model::Base
   def encrypt_password
     return if password.blank?
     if password == password_confirmation
-      self.encrypted_password = password
+      self.encrypted_password = Password.create(password)
     else
       errors.add(:password_confirmation, "doesn't match Password")
     end

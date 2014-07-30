@@ -67,6 +67,13 @@ post '/logout' do
   halt 500 if current_user.logged_in?
 end
 
+# USERS
+
+get '/users' do
+  content_type :json
+  User.by_username.to_json
+end
+
 # ASSETS
 
 get '/assets' do

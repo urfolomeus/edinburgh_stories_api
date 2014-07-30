@@ -254,12 +254,15 @@ describe User do
   end
 end
 
+require 'bcrypt'
+include BCrypt
+
 def existing_user
   User.new(
     first_name: 'Bobby',
     last_name: 'Tables',
     username: 'bobbyt',
     email: 'bobby@example.com',
-    encrypted_password: 'password'
+    encrypted_password: Password.create('password')
   )
 end

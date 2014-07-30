@@ -8,6 +8,7 @@ gem 'shotgun'
 
 gem 'json'
 gem 'couchrest_model'
+gem 'bcrypt'
 
 group :development, :test do
   gem 'rspec'
