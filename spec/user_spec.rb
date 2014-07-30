@@ -48,6 +48,20 @@ describe User do
         expect(subject.errors[:email]).to include("can't be blank")
       end
 
+      describe 'username' do
+        it "can't be blank" do
+          expect(subject.errors[:username]).to include("can't be blank")
+        end
+
+        it "must be unique" do
+          user = existing_user
+          user.save!
+          subject.username = user.username
+          subject.valid?
+          expect(subject.errors[:username]).to include("has already been taken")
+        end
+      end
+
       it 'needs an encrypted_password' do
         expect(subject.errors[:encrypted_password]).to include("can't be blank")
       end

@@ -24,6 +24,7 @@ class User < CouchRest::Model::Base
 
   validates :first_name, :last_name, :email, :encrypted_password, presence: true
   validates :token_set, presence: true, unless: Proc.new {|u| u.auth_token.blank?}
+  validates :username, presence: true, uniqueness: true
 
   require 'bcrypt'
   include BCrypt
