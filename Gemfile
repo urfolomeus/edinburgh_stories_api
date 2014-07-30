@@ -11,4 +11,5 @@ gem 'couchrest_model'
 
 group :development, :test do
   gem 'rspec'
+  gem 'timecop'
 end
