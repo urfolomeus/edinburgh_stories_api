@@ -8,6 +8,10 @@ require File.expand_path('models/user', File.dirname(__FILE__))
 
 I18n.enforce_available_locales = false
 
+configure :production do
+  ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'])
+end
+
 helpers do
   def asset
     @asset ||= Asset.find(params[:id]) || halt(404)
