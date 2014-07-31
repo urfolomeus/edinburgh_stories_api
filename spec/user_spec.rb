@@ -1,37 +1,6 @@
-require 'couchrest_model'
-require 'timecop'
-require File.join(File.dirname(__FILE__), '../models/user.rb')
-
-I18n.enforce_available_locales = false
-
-ENV["COUCHDB_URL"]        ||= "http://localhost:5984"
-ENV["COUCHDB_DEFAULT_DB"] ||= "edinburgh_stories_api_test"
-
-$COUCH = CouchRest.new ENV["COUCHDB_URL"]
-$COUCH.default_database = ENV["COUCHDB_DEFAULT_DB"]
-$COUCHDB = $COUCH.default_database
-
-# HACK: https://github.com/couchrest/couchrest_model/issues/105
-if uri = URI.parse(ENV['COUCHDB_URL'])
-  CouchRest::Model::Base.configure do |config|
-    config.connection = {
-      :protocol => uri.scheme,
-      :host     => uri.host,
-      :port     => uri.port,
-      :prefix   => 'couchrest', # database name or prefix
-      :suffix   => nil,
-      :join     => '_',
-      :username => uri.user,
-      :password => uri.password
-    }
-  end
-end
+require 'spec_helper'
 
 describe User do
-  after :each do
-    User.all.each {|u| u.destroy}
-  end
-
   describe "validating" do
     describe "creating a new user" do
       before { subject.valid? }

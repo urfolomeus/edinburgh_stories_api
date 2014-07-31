@@ -1,22 +1,9 @@
 class InvalidCredentials < Exception; end
 
-class User < CouchRest::Model::Base
-  use_database $COUCHDB
+require 'bcrypt'
 
-  property :first_name,         String
-  property :last_name,          String
-  property :email,              String
-  property :username,           String
-  property :encrypted_password, String
-  property :auth_token,         String
-  property :token_set,          DateTime
-
-  timestamps!
-
-  design do
-    view :by_username
-    view :by_auth_token
-  end
+class User < ActiveRecord::Base
+  include BCrypt
 
   attr_accessor :password, :password_confirmation
 
@@ -26,17 +13,14 @@ class User < CouchRest::Model::Base
   validates :token_set, presence: true, unless: Proc.new {|u| u.auth_token.blank?}
   validates :username, presence: true, uniqueness: true
 
-  require 'bcrypt'
-  include BCrypt
-
   def self.authenticate!(username, password)
-    user = by_username.key(username).first
+    user = where(username: username).first
     raise InvalidCredentials.new('Invalid username or password') unless user && user.password_matches?(password)
     user
   end
 
   def self.get_with_token(token)
-    by_auth_token.key(token).first
+    where(auth_token: token).first
   end
 
   def login!
@@ -72,5 +56,4 @@ class User < CouchRest::Model::Base
     end
   end
 end
-
 
