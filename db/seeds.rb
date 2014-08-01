@@ -193,8 +193,7 @@ Asset.create(
   description: "It reminds me of the day I stood in a field in the early morning.",
   is_readable: false,
   updated_at: "2014-07-07T16:03:44.563Z",
-  created_at: "2014-07-07T16:03:41.234Z",
-  year: null
+  created_at: "2014-07-07T16:03:41.234Z"
 )
 Asset.create(
   title: "The Queen",
