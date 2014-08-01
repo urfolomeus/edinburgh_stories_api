@@ -65,7 +65,7 @@ get '/assets/:id' do
 end
 
 post '/assets' do
-  asset = Asset.create! params[:asset]
+  asset = Asset.create! params[:asset].select{|k,v| Asset.new.attributes.keys.member?(k.to_s)}
   content_type :json
   Asset.find(asset.id).to_json
 end
