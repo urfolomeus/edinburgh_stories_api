@@ -13,8 +13,14 @@ helpers do
     @asset ||= Asset.find(params[:id]) || halt(404)
   end
 
+  def token
+    @token ||= env['HTTP_AUTHORIZATION'].match(/^Token token=\"([^\"]*)\"$/)[1]
+  rescue
+    halt(400, {content_type: "json"}, {error: "Invalid token"}.to_json)
+  end
+
   def current_user
-    @current_user ||= User.get_with_token(params[:token]) || halt(404)
+    @current_user ||= User.find_by_auth_token(token) || halt(404)
   end
 end
 
@@ -35,8 +41,10 @@ post '/login' do
     user.login!
     content_type :json
     { token: user.auth_token }.to_json
-  rescue InvalidCredentials
-    halt 403
+  rescue InvalidCredentials => ice
+    halt 403, { error: ice }.to_json
+  rescue Exception => e
+    halt 500, { error: e }.to_json
   end
 end
 
