@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
 
   attr_accessor :password, :password_confirmation
 
+  has_many :assets
+
   before_validation :encrypt_password
 
   validates :first_name, :last_name, :email, :encrypted_password, presence: true

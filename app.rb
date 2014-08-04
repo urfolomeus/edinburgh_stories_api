@@ -16,7 +16,7 @@ helpers do
   def token
     @token ||= env['HTTP_AUTHORIZATION'].match(/^Token token=\"([^\"]*)\"$/)[1]
   rescue
-    halt(400, {content_type: "json"}, {error: "Invalid token"}.to_json)
+    halt(400, {'Content-Type' => 'json'}, {error: "Invalid token"}.to_json)
   end
 
   def current_user
@@ -65,6 +65,11 @@ end
 get '/assets' do
   content_type :json
   Asset.all.to_json
+end
+
+get '/assets/user' do
+  content_type :json
+  current_user.assets.to_json
 end
 
 get '/assets/:id' do
