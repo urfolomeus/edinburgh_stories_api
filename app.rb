@@ -78,9 +78,13 @@ get '/assets/:id' do
 end
 
 post '/assets' do
-  asset = Asset.create! params[:asset].select{|k,v| Asset.new.attributes.keys.member?(k.to_s)}
+  asset = current_user.assets.create! asset_attrs(params[:asset])
   content_type :json
   Asset.find(asset.id).to_json
+end
+
+def asset_attrs(attrs)
+  attrs.select{|k,v| Asset.new.attributes.keys.member?(k.to_s)}
 end
 
 put '/assets/:id' do
